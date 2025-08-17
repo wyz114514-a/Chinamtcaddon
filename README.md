@@ -1,0 +1,579 @@
+<html lang="zh-CN">
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>团队作品下载中心</title> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&amp;family=Montserrat:wght@700&amp;display=swap" rel="stylesheet"> 
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --qianjin: #2ecc71;
+            --hamasaki: #3498db;
+            --partner1: #e74c3c;
+            --partner2: #9b59b6;
+            --dark: #2c3e50;
+            --light: #f8fafc;
+            --gray: #95a5a6;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow-x: hidden;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            color: white;
+        }
+        
+        header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* 导航选项卡 */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0 50px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .tab {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            min-width: 200px;
+            text-align: center;
+        }
+        
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+        
+        .tab.active {
+            background: white;
+            color: var(--dark);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            border-color: white;
+        }
+        
+        .tab-qianjin.active { color: var(--qianjin); }
+        .tab-hamasaki.active { color: var(--hamasaki); }
+        .tab-partner1.active { color: var(--partner1); }
+        .tab-partner2.active { color: var(--partner2); }
+        
+        /* 内容区域 */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid;
+            color: white;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-right: 15px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .section-title i {
+            font-size: 2rem;
+            margin-right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .qianjin-section .section-title { border-color: var(--qianjin); }
+        .qianjin-section .section-title i { background: var(--qianjin); }
+        
+        .hamasaki-section .section-title { border-color: var(--hamasaki); }
+        .hamasaki-section .section-title i { background: var(--hamasaki); }
+        
+        .partner1-section .section-title { border-color: var(--partner1); }
+        .partner1-section .section-title i { background: var(--partner1); }
+        
+        .partner2-section .section-title { border-color: var(--partner2); }
+        .partner2-section .section-title i { background: var(--partner2); }
+        
+        /* 卡片网格 */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+        
+        .card-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .card:hover .card-image img {
+            transform: scale(1.05);
+        }
+        
+        .card-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+        
+        .qianjin-section .card-tag { background: var(--qianjin); }
+        .hamasaki-section .card-tag { background: var(--hamasaki); }
+        .partner1-section .card-tag { background: var(--partner1); }
+        .partner2-section .card-tag { background: var(--partner2); }
+        
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+        
+        .card-link {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .qianjin-section .card-link {
+            background: var(--qianjin);
+            color: white;
+        }
+        
+        .hamasaki-section .card-link {
+            background: var(--hamasaki);
+            color: white;
+        }
+        
+        .partner1-section .card-link {
+            background: var(--partner1);
+            color: white;
+        }
+        
+        .partner2-section .card-link {
+            background: var(--partner2);
+            color: white;
+        }
+        
+        .card-link:hover {
+            opacity: 0.9;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .card-link i {
+            margin-right: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+            color: rgba(255,255,255,0.7);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tab {
+                padding: 12px 25px;
+                font-size: 1rem;
+                min-width: 150px;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style> 
+  <script src="js/jq.js"></script> 
+ </head> 
+ <body id="v1"> 
+  <div id="v2" class=""> 
+   <header id="v3"> 
+    <h1 id="v4">团队产品展示</h1> 
+    <p id="v5" style="">Minecraft addon制作</p> 
+   </header> 
+   <div id="v6" class="tabs"> 
+    <div id="v7" class="tab tab-qianjin" data-target="qianjin">
+      芊进制作所 
+     <p id="v401" style="color: green;">推荐</p> 
+    </div> 
+    <div id="v9" class="tab tab-hamasaki" data-target="hamasaki">
+      浜崎重工 
+     <p id="v400" style="color: blue;">日系</p> 
+    </div> 
+    <div id="v11" class="tab tab-partner1" data-target="partner1">
+      新北区铁道制作组 
+     <p id="v399" style="color: red;">热门</p> 
+    </div> 
+    <div id="v13" class="tab tab-partner2 active" data-target="partner2">
+      精选作品 
+     <p id="v416" style="color: black;">控制器下载</p> 
+    </div> 
+   </div> 
+   <!-- 芊进制作所 --> 
+   <section class="content-section qianjin-section" id="qianjin"> 
+    <div id="v15" class="section-title"> 
+     <h2 id="v17">芊进制作所作品展示图片仅供参考🚫</h2> 
+     <p id="v414">适配我的世界基岩版1.21.9X版本</p> 
+    </div> 
+    <div id="v18" class="cards-grid"> 
+     <!-- 产品卡片 - 重复10次 --> 
+     <div id="v19" class="card" style="transform: translateY(0px); box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 30px;"> 
+      <div id="v20" class="card-image"> 
+       <div id="v22" class="card-tag">
+         热门 
+       </div> 
+       <img src="1a.jpg" alt="图片" id="v393"> 
+      </div> 
+      <div id="v23" class="card-content"> 
+       <h3 id="v24" style="color: black;">上海磁悬浮高速列车</h3> 
+       <p id="v25" style="color: black;">芊进制作所最佳作品</p> 
+       <h1 id="v394"> </h1> 
+       <p id="v395" style="color:red;">严禁商用🚫二次配布🚫二次分发🚫</p> 
+       <a id="v26" href="https://www.123684.com/s/Bw1Ejv-i72mH" class="card-link" style=""><i id="v45" class="fas fa-download"></i>下载作品</a> 
+       <ul id="v398"> 
+       </ul> 
+      </div> 
+     </div> 
+     <div id="v28" class="card" style="transform: translateY(0px); box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 30px;"> 
+      <div id="v29" class="card-image"> 
+       <div id="v31" class="card-tag">
+         推荐 
+       </div> 
+       <img src="2.jpg" alt="图片" id="v402"> 
+      </div> 
+      <div id="v32" class="card-content"> 
+       <h3 id="v33">韶山7D型电力机车</h3> 
+       <p id="v34" style="color: red;">严禁商用🚫二次配布🚫二次分发🚫</p> 
+       <a id="v35" href="https://www.123684.com/s/Bw1Ejv-z72mH" class="card-link"><i id="v36" class="fas fa-download"></i> 下载作品</a> 
+      </div> 
+     </div> 
+     <div id="v37" class="card" style="transform: translateY(0px); box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 30px;"> 
+      <div id="v38" class="card-image"> 
+       <div id="v40" class="card-tag">
+         推荐 
+       </div> 
+       <img src="3.jpg" alt="图片" id="v403"> 
+      </div> 
+      <div id="v41" class="card-content"> 
+       <h3 id="v42">FXN3C</h3> 
+       <p id="v43" style="color: red;">严禁商用🚫二次配布🚫二次分发🚫</p> 
+       <a id="v44" href="https://www.123684.com/s/Bw1Ejv-L72mH" class="card-link"><i id="v45" class="fas fa-download"></i> 下载作品</a> 
+      </div> 
+     </div> 
+     <div id="v46" class="card" style="transform: translateY(0px); box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 30px;"> 
+      <div id="v47" class="card-image"> 
+       <div id="v49" class="card-tag">
+         推荐 
+       </div> 
+       <img src="4.jpg" alt="图片" id="v404"> 
+      </div> 
+      <div id="v50" class="card-content"> 
+       <h3 id="v51">C70E型敞车</h3> 
+       <p id="v52" style="color: red;">严禁商用🚫二次配布🚫二次分发🚫</p> 
+       <a id="v53" href="https://www.123684.com/s/Bw1Ejv-572mH" class="card-link"><i id="v54" class="fas fa-download"></i> 下载作品</a> 
+      </div> 
+     </div> 
+    </div> 
+   </section> 
+   <!-- 浜崎重工 --> 
+   <section class="content-section hamasaki-section" id="hamasaki"> 
+    <div id="v109" class="section-title"> 
+     <h2 id="v111">浜崎重工作品展示</h2> 
+     <p id="v413">适配我的世界基岩版1.21.9X版本</p> 
+    </div> 
+    <div id="v112" class="cards-grid"> 
+     <!-- 产品卡片 - 重复10次 --> 
+     <div id="v113" class="card" style="transform: translateY(0px); box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 30px;"> 
+      <div id="v114" class="card-image"> 
+       <div id="v116" class="card-tag">
+         热门 
+       </div> 
+       <img src="6.jpg" alt="图片" id="v406"> 
+      </div> 
+      <div id="v117" class="card-content"> 
+       <h3 id="v118">郑州地铁2号线</h3> 
+       <p id="v119" style="color: red;">严禁商用🚫二次配布🚫二次分发🚫</p> 
+       <a id="v120" href="https://www.123684.com/s/Bw1Ejv-672mH" class="card-link"><i id="v121" class="fas fa-download"></i> 下载作品</a> 
+      </div> 
+     </div> 
+     <div id="v122" class="card" style="transform: translateY(-10px); box-shadow: rgba(0, 0, 0, 0.25) 0px 15px 40px;"> 
+      <div id="v123" class="card-image"> 
+       <div id="v125" class="card-tag">
+         推荐 
+       </div> 
+       <img src="5.jpg" alt="图片" id="v407"> 
+      </div> 
+      <div id="v126" class="card-content"> 
+       <h3 id="v127">H205系彩绘版</h3> 
+       <p id="v128" style="color: red;">严禁商用🚫二次配布🚫二次分发🚫</p> 
+       <a id="v129" href="https://www.123684.com/s/Bw1Ejv-q72mH" class="card-link"><i id="v130" class="fas fa-download"></i> 下载作品</a> 
+      </div> 
+     </div> 
+    </div> 
+   </section> 
+   <!-- 新北区铁道制作组 --> 
+   <section class="content-section partner1-section" id="partner1"> 
+    <div id="v203" class="section-title"> 
+     <h2 id="v205">新北区铁道制作组作品展示</h2> 
+     <p id="v412">适配我的世界基岩版1.21.9X版本</p> 
+    </div> 
+    <div id="v206" class="cards-grid"> 
+     <!-- 产品卡片 - 重复10次 --> 
+     <div id="v207" class="card" style="transform: translateY(0px); box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 30px;"> 
+      <div id="v208" class="card-image"> 
+       <div id="v210" class="card-tag">
+         精选 
+       </div> 
+       <img src="7.jpg" alt="图片" id="v408"> 
+      </div> 
+      <div id="v211" class="card-content"> 
+       <h3 id="v212">HXD3C型电力机车</h3> 
+       <p id="v213" style="color: red;">严禁商用🚫二次配布🚫二次分发🚫</p> 
+       <a id="v214" href="https://www.123684.com/s/g02ljv-Z8g4?pwd=P0cA#" class="card-link"><i id="v215" class="fas fa-download"></i> 下载作品(密码P0cA)</a> 
+      </div> 
+     </div> 
+     <div id="v216" class="card" style="transform: translateY(0px); box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 30px;"> 
+      <div id="v217" class="card-image"> 
+       <div id="v219" class="card-tag">
+         热门 
+       </div> 
+       <img src="9.png" alt="图片" id="v409"> 
+      </div> 
+      <div id="v220" class="card-content"> 
+       <h3 id="v221">YZ25G型客车</h3> 
+       <p id="v222" style="color: red;">严禁商用🚫二次配布🚫二次分发🚫</p> 
+       <a id="v223" href="https://www.123684.com/s/g02ljv-b8g4?pwd=itdl#" class="card-link"><i id="v224" class="fas fa-download"></i> 下载作品(密码itdl)</a> 
+      </div> 
+     </div> 
+     <div id="v225" class="card" style="transform: translateY(0px); box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 30px;"> 
+      <div id="v226" class="card-image"> 
+       <div id="v228" class="card-tag">
+         推荐 
+       </div> 
+       <img src="8.jpg" alt="图片" id="v411"> 
+      </div> 
+      <div id="v229" class="card-content"> 
+       <h3 id="v230">YZ22型客车</h3> 
+       <p id="v231" style="color: red;">严禁商用🚫二次配布🚫二次分发🚫</p> 
+       <a id="v232" href="https://www.123684.com/s/g02ljv-78g4?pwd=jAbB#" class="card-link"><i id="v233" class="fas fa-download"></i> 下载作品(密码jAbB)</a> 
+      </div> 
+     </div> 
+     <div id="v234" class="card" style="transform: translateY(0px); box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 30px;"> 
+      <div id="v235" class="card-image"> 
+       <div id="v237" class="card-tag">
+         推荐 
+       </div> 
+       <img src="11.jpg" alt="图片" id="v410"> 
+      </div> 
+      <div id="v238" class="card-content"> 
+       <h3 id="v239">中国准轨</h3> 
+       <p id="v240" style="color: red;">严禁商用🚫二次配布🚫二次分发🚫</p> 
+       <a id="v241" href="https://www.123684.com/s/g02ljv-caM4" class="card-link"><i id="v242" class="fas fa-download"></i> 下载作品(密码rAPn)</a> 
+      </div> 
+     </div> 
+    </div> 
+   </section> 
+   <!-- 合作伙伴2 --> 
+   <section class="content-section partner2-section active" id="partner2"> 
+    <div id="v297" class="section-title"> 
+     <h2 id="v299">精选作品展示</h2> 
+     <p id="v415">适配我的世界基岩版1.21.9X版本</p> 
+    </div> 
+    <div id="v300" class="cards-grid"> 
+     <!-- 产品卡片 - 重复10次 --> 
+     <div id="v301" class="card" style="transform: translateY(0px); box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 30px;"> 
+      <div id="v302" class="card-image"> 
+       <div id="v304" class="card-tag">
+         控制器 
+       </div> 
+       <img src="10.jpg" alt="图片" id="v417"> 
+      </div> 
+      <div id="v305" class="card-content"> 
+       <h3 id="v306">MTC2控制器下载</h3> 
+       <p id="v307">用于控制车包的控制器</p> 
+       <a id="v308" href="https://mca.cloudfree.jp/mtc2/" class="card-link"><i id="v309" class="fas fa-download"></i> 下载控制器</a> 
+      </div> 
+     </div> 
+     <div id="v310" class="card" style="transform: translateY(-10px); box-shadow: rgba(0, 0, 0, 0.25) 0px 15px 40px;"> 
+      <div id="v311" class="card-image"> 
+       <div id="v313" class="card-tag">
+         精选 
+       </div> 
+       <img src="12.png" alt="图片" id="v418"> 
+      </div> 
+      <div id="v314" class="card-content"> 
+       <h3 id="v315">郑州中建深铁3号线</h3> 
+       <p id="v316" style="color: red;">严禁商用🚫二次配布🚫二次分发🚫</p> 
+       <a id="v317" href="https://www.123684.com/s/Bw1Ejv-y72mH" class="card-link"><i id="v318" class="fas fa-download"></i> 下载作品</a> 
+      </div> 
+     </div> 
+    </div> 
+   </section> 
+   <footer id="v391"> 
+    <p id="v392" style="">© 2025 团队作品展示平台 | 芊进制作所、浜崎重工、新北区铁道制作组及其他团队产品资料下载中心</p> 
+    <p id="v405">严禁商用🚫二次配布🚫二次分发🚫二次改造🚫若有违反者后果自负，本制作团队概不负责</p> 
+   </footer> 
+  </div> 
+  <script>
+        // 标签切换功能
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有标签的active类
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // 添加当前标签active类
+                this.classList.add('active');
+                
+                // 隐藏所有内容区
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // 显示目标内容区
+                const targetId = this.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+        
+        // 添加悬停效果
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+                this.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.25)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.15)';
+            });
+        });
+    </script>  
+ </body>
+</html>
